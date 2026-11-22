@@ -1,0 +1,37 @@
+{
+  "titulo": "Escolha seus Jogos & Plataformas",
+  "descricao": "Clique nos botões abaixo para adicionar ou remover os cargos da sua preferência.",
+  "cor": "#5865F2",
+  "cargos": [
+    {
+      "id": "ID_CARGO_PC_GAMER",
+      "label": "PC Gamer",
+      "emoji": "🖥️",
+      "style": "Primary"
+    },
+    {
+      "id": "ID_CARGO_CONSOLE",
+      "label": "Console",
+      "emoji": "🎮",
+      "style": "Secondary"
+    },
+    {
+      "id": "ID_CARGO_FPS",
+      "label": "FPS & Táticos",
+      "emoji": "🎯",
+      "style": "Secondary"
+    },
+    {
+      "id": "ID_CARGO_RPG_MMO",
+      "label": "RPG & MMO",
+      "emoji": "⚔️",
+      "style": "Success"
+    },
+    {
+      "id": "ID_CARGO_COOP",
+      "label": "Co-op & Indie",
+      "emoji": "🧩",
+      "style": "Secondary"
+    }
+  ]
+}

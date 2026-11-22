@@ -1,0 +1,20 @@
+{
+  "name": "gaming-community-bot",
+  "version": "1.0.0",
+  "description": "Bot de Discord modular e otimizado (<200MB RAM) para comunidades de games.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --max-old-space-size=150 dev.js",
+    "start": "node --max-old-space-size=150 index.js",
+    "lint": "node --check index.js dev.js src/config.js src/storage/levelStore.js src/commands/registerCommands.js src/modules/streamLevels.js src/modules/announcements.js src/modules/rolePanel.js src/modules/honeypot.js src/modules/welcomeLeave.js src/modules/reactionRegister.js",
+    "build": "npm run lint"
+  },
+  "dependencies": {
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.4.5"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  }
+}
