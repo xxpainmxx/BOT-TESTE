@@ -31,7 +31,7 @@ import {
   handleRegisterPanelCommand,
 } from './src/modules/reactionRegister.js';
 
-validateConfig();
+const configCheck = validateConfig();
 loadStore();
 
 /**
@@ -105,7 +105,7 @@ client.once(Events.ClientReady, async (readyClient) => {
   console.log(`[Bot] Online como ${readyClient.user.tag} | RAM atual: ${rssMb} MB`);
 
   try {
-    await syncSlashCommands();
+    await syncSlashCommands(readyClient.user.id);
   } catch (err) {
     console.error('[Commands] Falha ao sincronizar slash commands:', err.message);
   }
@@ -196,7 +196,12 @@ async function gracefulShutdown(signal) {
 process.on('SIGINT', () => void gracefulShutdown('SIGINT'));
 process.on('SIGTERM', () => void gracefulShutdown('SIGTERM'));
 
-client.login(config.token).catch((err) => {
-  console.error('[Bot] Falha no login:', err.message);
-  process.exit(1);
-});
+if (!configCheck.ok) {
+  console.error(`[Config] ${configCheck.reason}`);
+  // Mantém o processo ocioso para evitar loop infinito de reinício na Discloud até configurar o token
+  setInterval(() => {}, 60_000);
+} else {
+  client.login(config.token).catch((err) => {
+    console.error('[Bot] Falha no login:', err.message);
+  });
+}

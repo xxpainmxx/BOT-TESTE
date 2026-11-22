@@ -34,16 +34,25 @@ export const commandsData = [
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 ].map((cmd) => cmd.toJSON());
 
-export async function syncSlashCommands() {
+export async function syncSlashCommands(fallbackClientId = '') {
+  const applicationId =
+    config.clientId && config.clientId !== 'COLOQUE_O_ID_DO_BOT_AQUI'
+      ? config.clientId
+      : fallbackClientId;
+
+  if (!applicationId) {
+    throw new Error('CLIENT_ID ausente para sincronizar comandos.');
+  }
+
   const rest = new REST({ version: '10' }).setToken(config.token);
 
   if (config.guildId && config.guildId !== 'COLOQUE_O_ID_DO_SERVIDOR_AQUI') {
-    await rest.put(Routes.applicationGuildCommands(config.clientId, config.guildId), {
+    await rest.put(Routes.applicationGuildCommands(applicationId, config.guildId), {
       body: commandsData,
     });
     console.log(`[Commands] ${commandsData.length} comandos sincronizados no servidor ${config.guildId}.`);
   } else {
-    await rest.put(Routes.applicationCommands(config.clientId), {
+    await rest.put(Routes.applicationCommands(applicationId), {
       body: commandsData,
     });
     console.log(`[Commands] ${commandsData.length} comandos sincronizados globalmente.`);
